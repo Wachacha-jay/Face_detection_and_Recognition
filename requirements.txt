@@ -1,0 +1,9 @@
+Flask
+facenet-pytorch
+torch
+torchvision
+opencv-python
+pillow
+matplotlib
+yt-dlp
+# Flask flash messaging is included with Flask 

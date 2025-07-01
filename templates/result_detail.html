@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Result Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f7f7f7; }
+        .container { max-width: 800px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #f0f0f0; }
+        img { border-radius: 8px; }
+        .downloads { margin: 20px 0; }
+        a { color: #2980b9; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Result Details</h1>
+        <div class="downloads">
+            <a href="{{ url_for('download_file', video_id=video_id, filename=result_img.split('/')[-1]) }}">Download Main Result Image</a> |
+            <a href="{{ url_for('download_file', video_id=video_id, filename='result_' + video_id + '.csv') }}">Download Summary CSV</a>
+        </div>
+        <img src="/{{ result_img }}" alt="Result Image" style="max-width:100%; border:1px solid #ccc; border-radius:8px;">
+        <h2>Detected Faces</h2>
+        <table>
+            <tr>
+                <th>Face</th>
+                <th>Name</th>
+                <th>Confidence (Distance)</th>
+                <th>Download</th>
+            </tr>
+            {% for face in faces %}
+            <tr>
+                <td><img src="/{{ face.face_img }}" alt="Face" style="max-width:80px;"></td>
+                <td>{{ face.name }}</td>
+                <td>{{ '%.2f'|format(face.distance) }}</td>
+                <td><a href="{{ url_for('download_file', video_id=video_id, filename=face.face_img.split('/')[-1]) }}">Download</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        <div style="margin-top:30px;"><a href="{{ url_for('index') }}">&larr; Back to Home</a></div>
+    </div>
+</body>
+</html> 

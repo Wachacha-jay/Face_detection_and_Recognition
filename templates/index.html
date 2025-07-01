@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Detection & Recognition App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background: #f7f7f7; }
+        .container { max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; }
+        form { margin-bottom: 30px; }
+        input[type="text"] { width: 80%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        input[type="submit"] { padding: 10px 20px; background: #2980b9; color: #fff; border: none; border-radius: 5px; cursor: pointer; }
+        input[type="submit"]:hover { background: #3498db; }
+        .result-img { margin-top: 30px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Face Detection & Recognition</h1>
+        <form method="post" onsubmit="showSpinner()">
+            <label for="youtube_url">YouTube Video URL(s):</label><br>
+            <textarea id="youtube_url" name="youtube_url" required placeholder="Paste one or more YouTube links here, one per line" rows="4" style="width:80%;padding:10px;border:1px solid #ccc;border-radius:5px;"></textarea>
+            <input type="submit" value="Analyze">
+        </form>
+        <div id="spinner" style="display:none;text-align:center;margin:20px;">
+            <img src="https://i.imgur.com/llF5iyg.gif" alt="Loading..." width="60"><br>
+            <span>Processing, please wait...</span>
+        </div>
+        <div style="margin-bottom: 20px;"><a href="{{ url_for('upload_known_face') }}">Upload Known Face</a></div>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="messages">
+            {% for message in messages %}
+              <div>{{ message }}</div>
+            {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        {% if result_imgs %}
+            <div class="result-img">
+                <h2>Results:</h2>
+                <div style="display:flex;flex-wrap:wrap;gap:20px;">
+                {% for result in result_imgs %}
+                    <div style="text-align:center;">
+                        <img src="{{ result.img }}" alt="Result Image" style="max-width:300px; border:1px solid #ccc; border-radius:8px;"><br>
+                        <a href="{{ url_for('result_detail', video_id=result.video_id) }}">View Details</a>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+        <script>
+        function showSpinner() {
+            document.getElementById('spinner').style.display = 'block';
+        }
+        </script>
+    </div>
+</body>
+</html> 
