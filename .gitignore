@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Virtual environments
+venv/
+ENV/
+.env/
+.venv/
+
+# Flask & general
+instance/
+*.sqlite3
+*.db
+*.log
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Results and uploads
+static/results/
+*.mp4
+*.webm
+*.csv
+*.json
+*.jpg
+*.png
+!sample.png
+
+# Misc
+*.bak
+*.swp
+*.tmp 
